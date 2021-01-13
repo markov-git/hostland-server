@@ -1,2 +1,276 @@
-<h1>About me</h1>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./style.css">
+    <title>My Portfolio</title>
+</head>
+<body>
+<div class="navigate" id="home">
+    <nav>
+        <ul class="menu">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
 
+        <div class="language">En</div>
+    </nav>
+</div>
+
+<div class="toggle" onclick="toggleMenu();"></div>
+
+<section class="banner">
+
+    <div class="imgSidebar">
+        <img src="./images/main.jpg">
+    </div>
+    <div class="contentBx">
+        <h5 class="logoText">My_Portfolio</h5>
+        <div>
+            <h4><span>Hello</span> I'm</h4>
+            <h2>Artem Markov</h2>
+            <h4>I'm a Junior Frontend Web Developer.</h4>
+
+            <a href="#about" class="btn">About Me</a>
+        </div>
+        <ul class="sci">
+            <li><a href="#" target="_blank"><img src="./images/facebook.png"></a></li>
+            <li><a href="https://www.instagram.com/letostk" target="_blank"><img src="./images/instagram.png"></a></li>
+            <li><a href="https://vk.com/id96125787" target="_blank"><img src="./images/vk.png"></a></li>
+        </ul>
+    </div>
+</section>
+
+<section class="about" id="about">
+    <div class="title white">
+        <h2>About Me</h2>
+    </div>
+    <div class="content">
+        <div class="textBx">
+            <p>Hello!<br><br>My name is Artem Markov, I am 25 years old and now looking for a job as a Junior Frontend
+                Web Developer.</p>
+            <p>By my main specialty I am a designer / builder of unique buildings and structures (such as high-category
+                roads, airfields, bridges, tunnels).</p>
+            <p>At the beginning of 2020, I realized that I wanted to program and started learning C++, but after a few
+                months I realized that it was not mine. I decided to study web development.</p>
+            <p>I have been studying web development for more than half a year and now I can say with confidence - I like
+                it!</p>
+        </div>
+        <div class="imgBx">
+            <img src="./images/bg1.jpg">
+        </div>
+    </div>
+</section>
+<section class="skills" id="skills">
+    <div class="title">
+        <h2>My Skills</h2>
+        <p>To summarize a little, this is what I know</p>
+    </div>
+    <div class="content">
+        <div class="servicesBx">
+            <svg viewbox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="#00bcd4"/>
+                <path fill="none" stroke-linecap="round" stroke-width="5" stroke="#fff"
+                      stroke-dasharray="62.8,188.4"
+                      d="M50 10
+           a 40 40 0 0 1 0 80
+           a 40 40 0 0 1 0 -80">
+                    <animate attributeName="stroke-dasharray" from="0,251.2" to="62.8,188.4" dur="1s"/>
+                </path>
+                <text x="50" y="50" text-anchor="middle" dy="7" font-size="20">Vue</text>
+            </svg>
+            <h2>Vue.js</h2>
+        </div>
+
+        <div class="servicesBx">
+            <svg viewbox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="#00bcd4"/>
+                <path fill="none" stroke-linecap="round" stroke-width="5" stroke="#fff"
+                      stroke-dasharray="62.8,188.4"
+                      d="M50 10
+           a 40 40 0 0 1 0 80
+           a 40 40 0 0 1 0 -80">
+                    <animate attributeName="stroke-dasharray" from="0,251.2" to="62.8,188.4" dur="1s"/>
+                </path>
+                <text x="50" y="50" text-anchor="middle" dy="7" font-size="20">React</text>
+            </svg>
+            <h2>ReactJS</h2>
+        </div>
+
+        <div class="servicesBx">
+            <svg viewbox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="#00bcd4"/>
+                <path fill="none" stroke-linecap="round" stroke-width="5" stroke="#fff"
+                      stroke-dasharray="150.7,100.5"
+                      d="M50 10
+           a 40 40 0 0 1 0 80
+           a 40 40 0 0 1 0 -80">
+                    <animate attributeName="stroke-dasharray" from="0,251.2" to="150.7,100.5" dur="1s"/>
+                </path>
+                <text x="50" y="50" text-anchor="middle" dy="7" font-size="13">HTML/CSS</text>
+            </svg>
+            <h2>HTML/CSS</h2>
+            <li>`SASS`</li>
+            <li>`БЭМ`</li>
+        </div>
+
+        <div class="servicesBx">
+            <svg viewbox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="#00bcd4"/>
+                <path fill="none" stroke-linecap="round" stroke-width="5" stroke="#fff"
+                      stroke-dasharray="175.8,75.4"
+                      d="M50 10
+           a 40 40 0 0 1 0 80
+           a 40 40 0 0 1 0 -80">
+                    <animate attributeName="stroke-dasharray" from="0,251.2" to="175.8,75.4" dur="1s"/>
+                </path>
+                <text x="50" y="50" text-anchor="middle" dy="7" font-size="20">JS</text>
+            </svg>
+            <h2>JavaScript</h2>
+            <li>and also TypeScript</li>
+            <li>ES6 - ES11</li>
+            <li>`Webpack` module bundler</li>
+            <li>`Gulp`, `Parcel` etc</li>
+        </div>
+
+        <div class="servicesBx">
+            <svg viewbox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="#00bcd4"/>
+                <path fill="none" stroke-linecap="round" stroke-width="5" stroke="#fff"
+                      stroke-dasharray="125.6,125.6"
+                      d="M50 10
+           a 40 40 0 0 1 0 80
+           a 40 40 0 0 1 0 -80">
+                    <animate attributeName="stroke-dasharray" from="0,251.2" to="125.6,125.6" dur="1s"/>
+                </path>
+                <text x="50" y="50" text-anchor="middle" dy="7" font-size="15">NodeJS</text>
+            </svg>
+            <h2>NodeJS</h2>
+            <li>`Handlebars` template engine</li>
+            <li>Experience with framework `Express`</li>
+            <li>The server of this hosting was written by me on `Express` :)</li>
+        </div>
+
+        <div class="servicesBx">
+            <svg viewbox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="#00bcd4"/>
+                <path fill="none" stroke-linecap="round" stroke-width="5" stroke="#fff"
+                      stroke-dasharray="75.4,175.8"
+                      d="M50 10
+           a 40 40 0 0 1 0 80
+           a 40 40 0 0 1 0 -80">
+                    <animate attributeName="stroke-dasharray" from="0,251.2" to="75.4,175.8" dur="1s"/>
+                </path>
+                <text x="50" y="50" text-anchor="middle" dy="7" font-size="20">C++</text>
+            </svg>
+            <h2>C++</h2>
+            <li>Knowledge of basics and syntax</li>
+            <li>Experience with cross-platform IDE `QT`</li>
+        </div>
+
+        <div class="servicesBx">
+            <svg viewbox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="#00bcd4"/>
+                <path fill="none" stroke-linecap="round" stroke-width="5" stroke="#fff"
+                      stroke-dasharray="150.7,100.5"
+                      d="M50 10
+           a 40 40 0 0 1 0 80
+           a 40 40 0 0 1 0 -80">
+                    <animate attributeName="stroke-dasharray" from="0,251.2" to="150.7,100.5" dur="1s"/>
+                </path>
+                <text x="50" y="50" text-anchor="middle" dy="7" font-size="13">Graphics</text>
+            </svg>
+            <h2>Graphics</h2>
+            <li>`Photoshop`</li>
+            <li>`Illustrator`</li>
+            <li>`Blender`</li>
+        </div>
+
+        <div class="servicesBx">
+            <svg viewbox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="#00bcd4"/>
+                <path fill="none" stroke-linecap="round" stroke-width="5" stroke="#fff"
+                      stroke-dasharray="150.7,100.5"
+                      d="M50 10
+           a 40 40 0 0 1 0 80
+           a 40 40 0 0 1 0 -80">
+                    <animate attributeName="stroke-dasharray" from="0,251.2" to="150.7,100.5" dur="1s"/>
+                </path>
+                <text x="50" y="50" text-anchor="middle" dy="7" font-size="13">Eng</text>
+            </svg>
+            <h2>English language</h2>
+            <p>CEFR: B2. Upper intermediate</p>
+        </div>
+    </div>
+</section>
+<section class="work" id="work">
+    <div class="title">
+        <h2>Recent Works</h2><br>
+    </div>
+    <div class="content">
+        <a class="workBx" href="/tictac">
+            <div class="imgBx">
+                <img src="./images/w/tictac.png">
+            </div>
+            <div class="textBx">
+                <h3>Tic Tac Toe</h3>
+                <p>Tic tac toe using minimax algorithm and mongodb</p>
+            </div>
+        </a>
+    </div>
+</section>
+<section class="contact" id="contact">
+    <div class="title white">
+        <h2>Contact Me</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consequatur labore possimus provident
+            veritatis voluptas?</p>
+    </div>
+    <div class="contactForm">
+        <div class="row">
+            <div class="col50">
+                <input type="text" name="" placeholder="First Name">
+            </div>
+            <div class="col50">
+                <input type="text" name="" placeholder="Last Name">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col50">
+                <input type="text" name="" placeholder="Email">
+            </div>
+            <div class="col50">
+                <input type="text" name="" placeholder="Mobile No.">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col100">
+                <textarea placeholder="Message"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col100">
+                <input type="submit" value="Send">
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="sidebar">
+    <ul class="menu">
+        <li><a href="#home" onclick="toggleMenu();">Home</a></li>
+        <li><a href="#about" onclick="toggleMenu();">About</a></li>
+        <li><a href="#skills" onclick="toggleMenu();">Skills</a></li>
+        <li><a href="#work" onclick="toggleMenu();">Work</a></li>
+        <li><a href="#contact" onclick="toggleMenu();">Contact</a></li>
+    </ul>
+</div>
+
+<script src="index.js"></script>
+</body>
+</html>
