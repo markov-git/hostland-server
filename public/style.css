@@ -77,7 +77,7 @@ nav {
 }
 
 .toggle.active {
-    background: #000 url(./img/close.png) no-repeat center;
+    background: #000 url(./images/close.png) no-repeat center;
     background-size: 30px;
     cursor: pointer;
 }
@@ -328,7 +328,7 @@ p {
 }
 
 .skills .content .servicesBx svg {
-    width:40%;
+    width: 40%;
 }
 
 .skills .content .servicesBx:hover circle {
@@ -357,7 +357,7 @@ p {
 }
 
 .skills .content .servicesBx:hover li,
-.skills .content .servicesBx:hover p{
+.skills .content .servicesBx:hover p {
     color: #fff;
 }
 
@@ -375,6 +375,8 @@ p {
     margin: 10px;
     transition: .5s;
     text-align: center;
+    border: #6c707c 1px solid;
+    border-radius: 5px;
 }
 
 .work .content .workBx .imgBx,
@@ -409,10 +411,15 @@ p {
     opacity: 1;
 }
 
-.work .content .workBx .textBx h3,
-.work .content .workBx .textBx p {
+.work .content .workBx .textBx h3 {
     color: #fff;
     text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 1em;
+}
+
+.work .content .workBx .textBx p {
+    color: #fff;
     letter-spacing: 1px;
     font-size: 1em;
 }
@@ -535,10 +542,12 @@ p {
         margin: 10px;
     }
 }
+
 @media (max-width: 680px) {
     .navigate {
         display: none;
     }
+
     section:first-of-type {
         min-height: 100vh;
     }

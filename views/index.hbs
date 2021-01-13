@@ -2,18 +2,18 @@
 <div class="navigate" id="home">
     <nav>
         <ul class="menu">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#work">Work</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#home" data-language="home">Home</a></li>
+            <li><a href="#about" data-language="about">About</a></li>
+            <li><a href="#skills" data-language="skills">Skills</a></li>
+            <li><a href="#work" data-language="work">Work</a></li>
+            <li><a href="#contact" data-language="contact">Contact</a></li>
         </ul>
 
-        <div class="language">En</div>
+        <div class="language" data-language="language">En</div>
     </nav>
 </div>
 
-<div class="toggle" onclick="toggleMenu();"></div>
+<div class="toggle"></div>
 
 <section class="banner">
 
@@ -21,13 +21,13 @@
         <img src="./images/main.jpg">
     </div>
     <div class="contentBx">
-        <h5 class="logoText">My_Portfolio</h5>
+        <h5 class="logoText" data-language="portfolio">My_Portfolio</h5>
         <div>
-            <h4><span>Hello</span> I'm</h4>
-            <h2>Artem Markov</h2>
-            <h4>I'm a Junior Frontend Web Developer.</h4>
+            <h4 data-language="hello"><span >Hello</span> I'm</h4>
+            <h2 data-language="name">Artem Markov</h2>
+            <h4 data-language="dev">I'm a Junior Frontend Web Developer.</h4>
 
-            <a href="#about" class="btn">About Me</a>
+            <a href="#about" class="btn" data-language="aboutMe">About Me</a>
         </div>
         <ul class="sci">
             <li><a href="#" target="_blank"><img src="./images/facebook.png"></a></li>
@@ -39,14 +39,15 @@
 
 <section class="about" id="about">
     <div class="title white">
-        <h2>About Me</h2>
+        <h2 data-language="aboutMe">About Me</h2>
     </div>
     <div class="content">
-        <div class="textBx">
-            <p>Hello!<br><br>My name is Artem Markov, I am 25 years old and now looking for a job as a Junior Frontend
+        <div class="textBx" data-language="aboutMeText">
+            <p>Hello!<br><br>My name is Artem, I am 25 years old and now looking for a job as a Junior Frontend
                 Web Developer.</p>
             <p>By my main specialty I am a designer / builder of unique buildings and structures (such as high-category
                 roads, airfields, bridges, tunnels).</p>
+            <p>In addition, in my free time, I went to English courses. Now I have a translator's diploma. But due to the fact that I have practiced very little lately, my spoken English is terrible</p>
             <p>At the beginning of 2020, I realized that I wanted to program and started learning C++, but after a few
                 months I realized that it was not mine. I decided to study web development.</p>
             <p>I have been studying web development for more than half a year and now I can say with confidence - I like
@@ -59,8 +60,8 @@
 </section>
 <section class="skills" id="skills">
     <div class="title">
-        <h2>My Skills</h2>
-        <p>To summarize a little, this is what I know</p>
+        <h2 data-language="mySkills">My Skills</h2>
+        <p data-language="skillsDesc">To summarize a little, this is what I know</p>
     </div>
     <div class="content">
         <div class="servicesBx">
@@ -73,24 +74,11 @@
            a 40 40 0 0 1 0 -80">
                     <animate attributeName="stroke-dasharray" from="0,251.2" to="62.8,188.4" dur="1s"/>
                 </path>
-                <text x="50" y="50" text-anchor="middle" dy="7" font-size="20">Vue</text>
+                <text x="50" y="50" text-anchor="middle" dy="7" font-size="20">Fw</text>
             </svg>
-            <h2>Vue.js</h2>
-        </div>
-
-        <div class="servicesBx">
-            <svg viewbox="0 0 100 100">
-                <circle cx="50" cy="50" r="45" fill="#00bcd4"/>
-                <path fill="none" stroke-linecap="round" stroke-width="5" stroke="#fff"
-                      stroke-dasharray="62.8,188.4"
-                      d="M50 10
-           a 40 40 0 0 1 0 80
-           a 40 40 0 0 1 0 -80">
-                    <animate attributeName="stroke-dasharray" from="0,251.2" to="62.8,188.4" dur="1s"/>
-                </path>
-                <text x="50" y="50" text-anchor="middle" dy="7" font-size="20">React</text>
-            </svg>
-            <h2>ReactJS</h2>
+            <h2>JavaScript Frameworks</h2>
+            <li>Vue.js</li>
+            <li>ReactJS</li>
         </div>
 
         <div class="servicesBx">
@@ -123,10 +111,10 @@
                 <text x="50" y="50" text-anchor="middle" dy="7" font-size="20">JS</text>
             </svg>
             <h2>JavaScript</h2>
-            <li>and also TypeScript</li>
+            <li>TypeScript</li>
             <li>ES6 - ES11</li>
             <li>`Webpack` module bundler</li>
-            <li>`Gulp`, `Parcel` etc</li>
+            <li>`Gulp`, `Parcel` etc.</li>
         </div>
 
         <div class="servicesBx">
@@ -145,6 +133,24 @@
             <li>`Handlebars` template engine</li>
             <li>Experience with framework `Express`</li>
             <li>The server of this hosting was written by me on `Express` :)</li>
+        </div>
+
+        <div class="servicesBx">
+            <svg viewbox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="#00bcd4"/>
+                <path fill="none" stroke-linecap="round" stroke-width="5" stroke="#fff"
+                      stroke-dasharray="100.48,150.72"
+                      d="M50 10
+           a 40 40 0 0 1 0 80
+           a 40 40 0 0 1 0 -80">
+                    <animate attributeName="stroke-dasharray" from="0,251.2" to="100.48,150.72" dur="1s"/>
+                </path>
+                <text x="50" y="50" text-anchor="middle" dy="7" font-size="15">DB</text>
+            </svg>
+            <h2>Data Bases</h2>
+            <li>`MySQL`</li>
+            <li>`MongoDB`</li>
+            <li>`NeDB`</li>
         </div>
 
         <div class="servicesBx">
@@ -201,7 +207,7 @@
 </section>
 <section class="work" id="work">
     <div class="title">
-        <h2>Recent Works</h2><br>
+        <h2 data-language="myWorks">Recent Works</h2><br>
     </div>
     <div class="content">
         <a class="workBx" href="/tictac">
@@ -209,42 +215,58 @@
                 <img src="./images/w/tictac.png">
             </div>
             <div class="textBx">
-                <h3>Tic Tac Toe</h3>
-                <p>Tic tac toe using minimax algorithm and mongodb</p>
+                <h3 data-language="tictac">Tic Tac Toe</h3><br>
+                <p data-language="tictacDesc">Minimax algorithm<br>Mongodb</p>
+            </div>
+        </a>
+        <a class="workBx" href="/excel">
+            <div class="imgBx">
+                <img src="./images/w/excel.png">
+            </div>
+            <div class="textBx">
+                <h3 data-language="excel">Web Excel</h3><br>
+                <p data-language="excelDesc">Pure JavaScript</p>
+            </div>
+        </a>
+        <a class="workBx" href="#work">
+            <div class="imgBx">
+                <img src="./images/w/maze.png">
+            </div>
+            <div class="textBx">
+                <h3 data-language="excel">Maze Creeper</h3><br>
+                <p data-language="excelDesc">in Development</p>
             </div>
         </a>
     </div>
 </section>
 <section class="contact" id="contact">
     <div class="title white">
-        <h2>Contact Me</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consequatur labore possimus provident
-            veritatis voluptas?</p>
+        <h2 data-language="contactMe">Contact Me</h2>
     </div>
     <div class="contactForm">
         <div class="row">
-            <div class="col50">
-                <input type="text" name="" placeholder="First Name">
+            <div class="col50" data-language="inpFN">
+                <input type="text" name="firstName" placeholder="First Name">
             </div>
-            <div class="col50">
-                <input type="text" name="" placeholder="Last Name">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col50">
-                <input type="text" name="" placeholder="Email">
-            </div>
-            <div class="col50">
-                <input type="text" name="" placeholder="Mobile No.">
+            <div class="col50" data-language="inpLN">
+                <input type="text" name="lastName" placeholder="Last Name">
             </div>
         </div>
         <div class="row">
-            <div class="col100">
+            <div class="col50" >
+                <input type="text" name="email" placeholder="Email">
+            </div>
+            <div class="col50" data-language="phone">
+                <input type="text" name="phone" placeholder="Mobile No.">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col100" data-language="message">
                 <textarea placeholder="Message"></textarea>
             </div>
         </div>
         <div class="row">
-            <div class="col100">
+            <div class="col100" data-language="btnMessage">
                 <input type="submit" value="Send">
             </div>
         </div>
@@ -253,11 +275,11 @@
 
 <div class="sidebar">
     <ul class="menu">
-        <li><a href="#home" onclick="toggleMenu();">Home</a></li>
-        <li><a href="#about" onclick="toggleMenu();">About</a></li>
-        <li><a href="#skills" onclick="toggleMenu();">Skills</a></li>
-        <li><a href="#work" onclick="toggleMenu();">Work</a></li>
-        <li><a href="#contact" onclick="toggleMenu();">Contact</a></li>
+        <li><a href="#home" id="toggleLink" data-language="home">Home</a></li>
+        <li><a href="#about" id="toggleLink" data-language="about">About</a></li>
+        <li><a href="#skills" id="toggleLink" data-language="skills">Skills</a></li>
+        <li><a href="#work" id="toggleLink" data-language="work">Work</a></li>
+        <li><a href="#contact" id="toggleLink" data-language="contact">Contact</a></li>
     </ul>
 </div>
 <script src="index.js"></script>
