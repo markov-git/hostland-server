@@ -1,6 +1,7 @@
 const {Router} = require('express')
 const router = Router()
 const telegram = require('../emails/telegram')
+process.env["NTBA_FIX_319"] = 1;
 const TelegramBot = require('node-telegram-bot-api')
 const keys = require('../keys/keys')
 

@@ -33,8 +33,11 @@ const dictionary = {
     name: {
         ru: 'Марков Артем', en: 'Artem Markov'
     },
-    dev: {
-        ru: 'Я Frontend Разработчик', en: 'I\'m a Frontend Web Developer.'
+    devF: {
+        ru: 'Я Junior Frontend Разработчик', en: 'I\'m a Junior Frontend Web Developer.'
+    },
+    devB: {
+        ru: 'Я Junior Backend NodeJS Разработчик', en: 'I\'m a Junior Backend NodeJS Web Developer.'
     },
     aboutMeText: {
         ru: `<p>Привет!<br><br>Меня зовут Артем, мне 25 и я ищу работу Frontend
