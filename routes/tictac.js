@@ -3,10 +3,6 @@ const Tictac = require('../models/tictac')
 const keys = require('../keys/keys')
 const router = Router()
 
-router.get('/', (req, res) => {
-    res.redirect('/tictac')
-})
-
 // get statistic
 router.get('/statistic', async (req, res) => {
     try {

@@ -1,46 +1,3 @@
-const toggle = document.querySelector('.toggle')
-const sidebar = document.querySelector('.sidebar')
-const about = document.querySelector('.about')
-const contact = document.querySelector('.contact')
-const links = document.querySelectorAll('#toggleLink')
-
-function toggleMenu() {
-    toggle.classList.toggle('active')
-    sidebar.classList.toggle('active')
-}
-
-links.forEach(link => {
-    link.addEventListener('click', () => {
-        toggleMenu()
-    })
-})
-
-toggle.addEventListener('click', () => {
-    toggleMenu()
-})
-if (window.scrollY < 45) {
-    toggle.classList.add('hidden')
-}
-window.addEventListener('scroll', () => {
-    const sY = window.scrollY
-    if (sY < 45) {
-        toggle.classList.add('hidden')
-    } else {
-        toggle.classList.remove('hidden')
-    }
-    const y1 = about.getBoundingClientRect().y + pageYOffset
-    const y2 = y1 + about.getBoundingClientRect().height
-
-    const y3 = contact.getBoundingClientRect().y + pageYOffset
-    const y4 = y3 + contact.getBoundingClientRect().height
-    if ((sY + 50 > y1 && sY + 50 < y2) ||
-        (sY + 50 > y3 && sY + 50 < y4)) {
-        toggle.classList.add('invert')
-    } else {
-        toggle.classList.remove('invert')
-    }
-})
-
 const language = document.querySelector('.language')
 let $toTranslate
 
@@ -111,16 +68,25 @@ const dictionary = {
     tictacDesc: {
         ru: 'Алгоритм Минимакс<br><br>База данных MongoDB', en: 'Minimax algorithm<br>Mongodb'
     },
+    excel: {
+        ru: 'Excel', en: 'Web Excel'
+    },
+    excelDesc: {
+        ru: 'JavaScript без фреймворков', en: 'Native JavaScript'
+    },
+    mazeDesc: {
+        ru: 'В разработке', en: 'in Development'
+    },
     contactMe: {
         ru: 'Форма обратной связи', en: 'Contact Me'
     },
     inpFN: {
         ru: `<input type="text" name="firstName" placeholder="Имя">`,
-        en: `<input type="text" name="firstName" placeholder="First Name">`
+        en: `<input type="text" name="firstName" placeholder="Name">`
     },
-    inpLN: {
-        ru: `<input type="text" name="lastName" placeholder="Фамилия">`,
-        en: `<input type="text" name="lastName" placeholder="Last Name">`
+    inpC: {
+        ru: `<input type="text" name="company" placeholder="Организация*" class="_req">`,
+        en: `<input type="text" name="company" placeholder="Company*" class="_req">`
     },
     phone: {
         ru: `<input type="text" name="phone" placeholder="Номер телефона">`,
@@ -133,6 +99,14 @@ const dictionary = {
     btnMessage: {
         ru: `<input type="submit" value="Отправить">`,
         en: `<input type="submit" value="Send">`
+    },
+    errorMany: {
+        ru: `Слишком много сообщений сегодня, попробуйте завтра`,
+        en: `Too many messages today, try tomorrow`
+    },
+    errorValid: {
+        ru: `Заполните поля со звездочкой (*)`,
+        en: `Fill in the fields with an asterisk (*)`
     },
 }
 if (localStorage.getItem('language') === 'ru') {
@@ -163,4 +137,3 @@ function toggleMetaLanguage() {
     }
     localStorage.setItem('language', document.documentElement.lang);
 }
-

@@ -7,6 +7,7 @@ const compression = require('compression')
 const keys = require('./keys/keys')
 
 const homeRoutes = require('./routes/home')
+const telegramRoutes = require('./routes/telegram')
 const ticRoutes = require('./routes/tictac')
 const errorHandler = require('./middleware/error')
 
@@ -24,12 +25,13 @@ app.set('views', 'views')
 
 app.use(express.static(path.join(__dirname, 'public')))
 app.use('/images', express.static(path.join(__dirname, 'images')))
-app.use(express.urlencoded({extended: true}))
+app.use(express.json())
 
 app.use(helmet())
 app.use(compression())
 
 app.use('/', homeRoutes)
+app.use('/telegram', telegramRoutes)
 app.use('/tictac', ticRoutes)
 
 app.use(errorHandler)

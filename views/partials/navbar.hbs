@@ -1,0 +1,22 @@
+<div class="navigate" id="home">
+    <nav>
+        {{#if isHome}}
+            <ul class="menu">
+                <li><a href="#home" data-language="home">Home</a></li>
+                <li><a href="#about" data-language="about">About</a></li>
+                <li><a href="#skills" data-language="skills">Skills</a></li>
+                <li><a href="#work" data-language="work">Work</a></li>
+                <li><a href="#contact" data-language="contact">Contact</a></li>
+            </ul>
+            <div class="language" data-language="language">En</div>
+        {{else}}
+            <ul class="menu">
+                <li><a href="/#home" data-language="home">Home</a></li>
+                <li><a href="/#about" data-language="about">About</a></li>
+                <li><a href="/#skills" data-language="skills">Skills</a></li>
+                <li><a href="/#work" data-language="work">Work</a></li>
+                <li><a href="/#contact" data-language="contact">Contact</a></li>
+            </ul>
+        {{/if}}
+    </nav>
+</div>
