@@ -10,6 +10,7 @@ form.addEventListener('submit', async (e) => {
 
     _sending.style.visibility = 'visible'
     loader.style.visibility = 'visible'
+    loader.style.display = 'inline-block'
     if (error === 0 && getLocalStorage() < 3) {
         try {
             await sendForm(form)
