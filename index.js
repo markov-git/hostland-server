@@ -1,10 +1,9 @@
 const express = require('express')
 const path = require('path')
-const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
 const helmet = require('helmet')
 const compression = require('compression')
-const keys = require('./keys/keys')
+const minifyHTML = require('express-minify-html')
 
 const homeRoutes = require('./routes/home')
 const telegramRoutes = require('./routes/telegram')
@@ -23,11 +22,24 @@ app.engine('hbs', hbs.engine)
 app.set('view engine', 'hbs')
 app.set('views', 'views')
 
+
 app.use(express.static(path.join(__dirname, 'public')))
 app.use('/images', express.static(path.join(__dirname, 'images')))
 app.use(express.json())
 
 app.use(helmet())
+app.use(minifyHTML({
+    override:      true,
+    exception_url: false,
+    htmlMinifier: {
+        removeComments:            true,
+        collapseWhitespace:        true,
+        collapseBooleanAttributes: true,
+        removeAttributeQuotes:     true,
+        removeEmptyAttributes:     true,
+        minifyJS:                  true
+    }
+}))
 app.use(compression())
 
 app.use('/', homeRoutes)
@@ -38,11 +50,7 @@ app.use(errorHandler)
 
 async function start() {
     try {
-        await mongoose.connect(keys.MONGODB_URI, {
-            useNewUrlParser: true,
-            useFindAndModify: false,
-            useUnifiedTopology: true
-        })
+
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`)
             console.log(`http://localhost:${PORT}`)
