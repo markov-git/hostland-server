@@ -8,6 +8,7 @@ const minifyHTML = require('express-minify-html')
 const homeRoutes = require('./routes/home')
 const telegramRoutes = require('./routes/telegram')
 const ticRoutes = require('./routes/tictac')
+const excelRoutes = require('./routes/excel')
 const errorHandler = require('./middleware/error')
 
 const PORT = process.env.PORT || 3000
@@ -45,6 +46,7 @@ app.use(compression())
 app.use('/', homeRoutes)
 app.use('/telegram', telegramRoutes)
 app.use('/tictac', ticRoutes)
+app.use('/excel', excelRoutes)
 
 app.use(errorHandler)
 
