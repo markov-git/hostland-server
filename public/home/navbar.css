@@ -8,6 +8,10 @@
     scroll-behavior: smooth;
 }
 
+.navigate {
+    width: 100%;
+}
+
 nav a {
     text-decoration: none;
     padding: 10px 15px;

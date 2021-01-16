@@ -349,7 +349,7 @@ function changeLanguage(lang) {
 
 function getDataFromServer() {
     try {
-        getData();
+        getData()
     } catch {
         console.log('get request failed successfully')
     }
@@ -367,6 +367,7 @@ function postDataToServer(res) {
 
 //statistic interface
 async function getData() {
+
     const response = await fetch('/tictac/statistic', {
         method: 'get'
     });

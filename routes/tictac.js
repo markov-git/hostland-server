@@ -4,6 +4,13 @@ const mongoose = require('mongoose')
 const keys = require('../keys/keys')
 const router = Router()
 
+router.get('/', ((req, res) => {
+  res.render('tictac', {
+    title: 'Tic Tac Toe',
+    isTic: true,
+  })
+}))
+
 // get statistic
 router.get('/statistic', async (req, res) => {
   try {
