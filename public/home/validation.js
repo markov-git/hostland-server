@@ -57,7 +57,7 @@ function wrongHTML(message) {
     loader.style.display = 'none'
     wrong.style.visibility = 'hidden'
     wrong.querySelector('svg').style.display = 'none'
-  }, 4000)
+  }, 2000)
 }
 
 function okHTML() {
@@ -75,7 +75,8 @@ function okHTML() {
 }
 
 function getLocalStorage() {
-  return JSON.parse(localStorage.getItem('metaMessage'))?.num || 0
+  const storage = JSON.parse(localStorage.getItem('metaMessage'))
+  return storage?.exp < new Date().getTime() ? 0 : storage.num
 }
 
 function saveLocalStorage() {
