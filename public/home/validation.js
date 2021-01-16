@@ -76,7 +76,7 @@ function okHTML() {
 
 function getLocalStorage() {
   const storage = JSON.parse(localStorage.getItem('metaMessage'))
-  return storage?.exp < new Date().getTime() ? 0 : storage.num
+  return storage?.exp < new Date().getTime() ? 0 : (storage?.num || 0)
 }
 
 function saveLocalStorage() {
