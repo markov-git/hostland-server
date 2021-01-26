@@ -9,7 +9,9 @@ const homeRoutes = require('./routes/home')
 const telegramRoutes = require('./routes/telegram')
 const ticRoutes = require('./routes/tictac')
 const excelRoutes = require('./routes/excel')
+const fetchRoutes = require('./routes/fetch')
 const errorHandler = require('./middleware/error')
+const corsHandler = require('./middleware/cors')
 
 const PORT = process.env.PORT || 3000
 
@@ -27,6 +29,9 @@ app.set('views', 'views')
 app.use(express.static(path.join(__dirname, 'public')))
 app.use('/images', express.static(path.join(__dirname, 'images')))
 app.use(express.json())
+app.use(express.text())
+
+app.use(corsHandler)    // all origin opened for api!
 
 app.use(helmet())
 app.use(minifyHTML({
@@ -47,6 +52,7 @@ app.use('/', homeRoutes)
 app.use('/telegram', telegramRoutes)
 app.use('/tictac', ticRoutes)
 app.use('/excel', excelRoutes)
+app.use('/fetch', fetchRoutes)
 
 app.use(errorHandler)
 

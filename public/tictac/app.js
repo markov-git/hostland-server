@@ -370,8 +370,8 @@ async function getData() {
 
     const response = await fetch('/tictac/statistic', {
         method: 'get'
-    });
-    const data = await response.json();
+    })
+    const data = await response.json()
     $total.innerHTML = data.total.toString()
     $wins.innerHTML = data.wins.toString()
     $ties.innerHTML = data.ties.toString()
