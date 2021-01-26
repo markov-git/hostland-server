@@ -390,6 +390,8 @@ p {
 }
 
 .work .content .workBx .textBx a {
+    display: inline-block;
+    padding: 5px 0;
     text-decoration: none;
     color: #fff;
     letter-spacing: 1px;
