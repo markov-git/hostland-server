@@ -8,6 +8,7 @@
     border-radius: 15%;
     cursor: pointer;
     z-index: 1000;
+    transition: right .8s;
 }
 
 .cross {
@@ -22,8 +23,8 @@
     filter: invert(1);
 }
 
-.hidden {
-    display: none;
+.toggle.hidden:not(.active) {
+    right: -100px;
 }
 
 .toggle.active {
