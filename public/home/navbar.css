@@ -32,7 +32,6 @@ nav {
     background: #f4f7ff;
     padding: 10px 40px;
     box-shadow: 2px 2px 12px rgba(0, 0, 0, .05);
-
 }
 
 @media (max-width: 680px) {
@@ -45,6 +44,8 @@ nav {
     color: #292929;
     min-width: 50px;
     text-align: center;
+    padding: 10px 15px;
+    margin: -10px 0;
 }
 
 .language:hover {

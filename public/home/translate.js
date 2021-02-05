@@ -3,7 +3,7 @@ let $toTranslate
 
 const dictionary = {
     language: {
-        ru: 'рус', en: 'en'
+        ru: 'ру', en: 'en'
     },
     home: {
         ru: 'главная', en: 'home'
