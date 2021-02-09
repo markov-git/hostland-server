@@ -306,6 +306,7 @@
     </div>
   </div>
 </section>
+
 <section class="contact" id="contact">
   <div class="title white">
     <h2 data-language="contactMe">Contact Me</h2>
@@ -402,8 +403,29 @@
     <li><a href="#skills" id="toggleLink" data-language="skills">Skills</a></li>
     <li><a href="#work" id="toggleLink" data-language="work">Work</a></li>
     <li><a href="#contact" id="toggleLink" data-language="contact">Contact</a></li>
+    <li><a href="#" id="login">Admin login</a></li>
   </ul>
 </div>
+
+<div class="modal">
+  <div class="modal__backBlur"></div>
+  <div class="modal__card">
+    <div class="title white">
+      <h2 data-language="contactMe">Log In</h2>
+    </div>
+    <div class="modal__auth-form">
+      <form action="/auth" method="post">
+        <input type="password" id="password" name="password" placeholder="Password">
+        <p></p>
+        <button class="btn" type="submit" disabled>Log In</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+
 <script src="/home/index.js"></script>
 <script src="/home/translate.js"></script>
 <script src="/home/validation.js"></script>
+<script src="/home/auth.js"></script>
+

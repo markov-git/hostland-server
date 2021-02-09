@@ -7,7 +7,7 @@
     background-size: 30px;
     border-radius: 15%;
     cursor: pointer;
-    z-index: 1000;
+    z-index: 20;
     transition: right .8s;
 }
 
@@ -139,7 +139,7 @@ p {
     align-items: center;
     transition: .5s;
     padding: 40px;
-    z-index: 100;
+    z-index: 10;
     right: -100%;
 }
 
@@ -158,6 +158,10 @@ p {
     list-style: none;
 }
 
+.sidebar ul li:last-child {
+    margin-top: 50px;
+}
+
 .sidebar ul li a {
     color: #fff;
     text-decoration: none;
@@ -166,6 +170,10 @@ p {
     font-weight: 300;
     letter-spacing: 2px;
     text-transform: uppercase;
+}
+
+.sidebar ul li:last-child a:hover {
+    color: darkred;
 }
 
 .sidebar ul li a:hover {

@@ -11,16 +11,19 @@
   "license": "ISC",
   "dependencies": {
     "compression": "^1.7.4",
+    "connect-flash": "^0.1.1",
     "connect-mongodb-session": "^2.4.1",
     "express": "^4.17.1",
     "express-handlebars": "^5.2.0",
     "express-minify-html": "^0.12.0",
     "express-rate-limit": "^5.2.3",
+    "express-session": "^1.17.1",
     "express-validator": "^6.9.2",
     "helmet": "^4.3.1",
     "mongoose": "^5.11.11",
     "node-fetch": "^2.6.1",
-    "node-telegram-bot-api": "^0.51.0"
+    "node-telegram-bot-api": "^0.51.0",
+    "uuid": "^3.4.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
