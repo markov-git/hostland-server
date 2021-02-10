@@ -19,6 +19,7 @@ $modal
     $input.classList.remove('_error')
   })
 
+// maybe will be better e.target.value
 $input.addEventListener('input', () => {
   $btn.disabled = $input.value.length < 4
 })
