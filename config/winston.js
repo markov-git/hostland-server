@@ -27,4 +27,10 @@ const logger = winston.createLogger({
   exitOnError: false
 })
 
+logger.stream = {
+  write(message) {
+    logger.info(message)
+  }
+}
+
 module.exports = logger
