@@ -1,4 +1,5 @@
 const {Router} = require('express')
+const winston = require('../config/winston')
 const Tictac = require('../models/tictac')
 const keys = require('../keys/keys')
 const router = Router()
@@ -19,6 +20,10 @@ router.get('/statistic', async (req, res) => {
       ties: tictac.ties
     })
   } catch (e) {
+    winston.error({
+      date: new Date().toString(),
+      message: e
+    })
     res.status(500).json({
       message: 'Server error'
     })
@@ -38,6 +43,10 @@ router.post('/statistic/:id', async (req, res) => {
     await tictac.save()
     res.status(200).json(tictac)
   } catch (e) {
+    winston.error({
+      date: new Date().toString(),
+      message: e
+    })
     res.status(500).json({
       message: 'Server error'
     })

@@ -1,4 +1,5 @@
 const {Router} = require('express')
+const winston = require('../config/winston')
 const router = Router()
 const telegram = require('../emails/telegram')
 process.env["NTBA_FIX_319"] = 1;
@@ -19,6 +20,10 @@ router.post('/sendFromSite', createAccountLimiter, (req, res) => {
     bot.sendMessage(keys.MY_TELEGRAM_ID, telegram(req.body))
     res.status(200).json({})
   } catch (e) {
+    winston.error({
+      date: new Date().toString(),
+      message: e
+    })
     console.log(e)
   }
 })

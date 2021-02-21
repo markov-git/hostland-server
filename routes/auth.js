@@ -1,5 +1,6 @@
 const {Router} = require('express')
 const keys = require('../keys/keys')
+const winston = require('../config/winston')
 const router = Router()
 const adminURL = require('uuid').v4()
 
@@ -10,6 +11,10 @@ router.post('/', (req, res) => {
     req.session.isAuthenticated = true
     req.session.save(err => {
       if (err) {
+        winston.error({
+          date: new Date().toString(),
+          message: err
+        })
         console.log(err)
       }
       res.status(200).json(`auth/${adminURL}`)
@@ -30,6 +35,10 @@ router.get(`/${adminURL}`, (req, res) => {
   } else {
     req.session.destroy(err => {
       if (err) {
+        winston.error({
+          date: new Date().toString(),
+          message: err
+        })
         console.log(err)
       }
       res.redirect('/')
