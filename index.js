@@ -10,6 +10,7 @@ const session = require('express-session')
 const MongoStore = require('connect-mongodb-session')(session)
 const flash = require('connect-flash')
 const mongoose = require('mongoose')
+const enableWs = require('express-ws')
 
 const homeRoutes = require('./routes/home')
 const telegramRoutes = require('./routes/telegram')
@@ -17,11 +18,24 @@ const ticRoutes = require('./routes/tictac')
 const excelRoutes = require('./routes/excel')
 const authRoutes = require('./routes/auth')
 const errorHandler = require('./middleware/error')
+const wsRoutes = require('./routes/ws.main')
 const keys = require('./keys/keys')
 
 const PORT = process.env.PORT || 3000
 
+const dev = process.env.NODE_ENV === 'development'
+
+if (dev) {
+  winston.info = data => {
+    console.log(data)
+  }
+  winston.warn = data => {
+    console.warn(data)
+  }
+}
+
 const app = express()
+enableWs(app)
 app.use(morgan('combined', {stream: winston.stream}))
 const hbs = exphbs.create({
   defaultLayout: 'main',
@@ -69,7 +83,9 @@ app.use('/auth', authRoutes)
 app.use('/telegram', telegramRoutes)
 app.use('/tictac', ticRoutes)
 app.use('/excel', excelRoutes)
+app.ws('/:id', wsRoutes)
 app.use(errorHandler)
+
 
 async function start() {
   try {
