@@ -18,7 +18,10 @@
         <p id="msg"></p>
       </div>
       <div class="card-action">
-        <button class="btn waves-effect waves-light" type="submit" id="link">Подключиться</button>
+        <button class="btn waves-effect waves-light" id="link" disabled>Создать комнату</button>
+        <button class="btn waves-effect waves-light" id="info" disabled>Свободные комнаты</button>
+        <button class="btn waves-effect waves-light" id="connect" disabled>Подключиться</button>
+        <input id="roomID" type="text">
       </div>
     </div>
   </div>
@@ -37,6 +40,7 @@
       </div>
       <div class="card-action">
         <button class="btn waves-effect waves-light" type="submit" id="send">Отправить</button>
+        <a class="waves-effect waves-light btn red" id="close">Закрыть сокет</a>
       </div>
     </div>
   </div>
@@ -48,24 +52,58 @@
   const btn = document.querySelector('#link')
   const msgBox = document.querySelector('#msg')
 
-  let socket
+  let socket = new WebSocket(`ws://${location.host}`)
+  socket.onopen = () => {
+    btn.disabled = false
+    infoBTN.disabled = false
+    connectBTN.disabled = false
+  }
+  socket.addEventListener('message', event => {
+    let payload = JSON.parse(event.data)
+    if (payload.type === 'data' || payload.type === 'info' || payload.type === 'error') {
+      payload = payload.data
+      msgBox.innerHTML = payload
+    } else if(payload.type === 'rooms') {
+      let res = ''
+      payload.data.forEach(obj => {
+        const key = Object.keys(obj)[0]
+        res += key + ` - "${obj[key]}"\n`
+      })
+      msgBox.innerHTML = res
+    }
+  })
 
   btn.addEventListener('click', () => {
     btn.disabled = true
-    socket = new WebSocket(`ws://${location.host}/testID`)
-
-    socket.addEventListener('message', event => {
-      msgBox.innerHTML = event.data.toString()
-      console.log('Message from server: ', event.data)
-    })
+    socket.send(JSON.stringify({action: 'newGame', meta: {name: 'zver', pass: '1234'}}))
   })
 
   const sendBTN = document.querySelector('#send')
   const sendData = document.querySelector('#sendData')
 
   sendBTN.addEventListener('click', () => {
-    socket.send(sendData.value)
+    socket.send(JSON.stringify({action: 'msg', message: sendData.value}))
     sendData.value = ''
+  })
+
+  const closeBTN = document.querySelector('#close')
+  closeBTN.addEventListener('click', () => {
+    socket.close()
+    msgBox.innerHTML = 'connection closed'
+  })
+
+  const infoBTN = document.querySelector('#info')
+
+  infoBTN.addEventListener('click', () => {
+    socket.send(JSON.stringify({action: 'info'}))
+  })
+
+  const connectBTN = document.querySelector('#connect')
+  const roomId = document.querySelector('#roomID')
+
+  connectBTN.addEventListener('click', () => {
+    socket.send(JSON.stringify({action: 'connect', meta: {pass: '1234', id: roomId.value.trim()}}))
+    roomId.value = ''
   })
 </script>
 </body>

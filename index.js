@@ -83,7 +83,7 @@ app.use('/auth', authRoutes)
 app.use('/telegram', telegramRoutes)
 app.use('/tictac', ticRoutes)
 app.use('/excel', excelRoutes)
-app.ws('/:id', wsRoutes)
+app.ws('/', wsRoutes)
 app.use(errorHandler)
 
 

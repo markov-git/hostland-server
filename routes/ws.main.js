@@ -1,7 +1,5 @@
-const gameStore = require('../store/GameStore')
+const gameState = require('../store/GameState')
 
-module.exports = (ws, req) => {
-  // after connecting ws
-  const {id} = req.params
-  gameStore.addPlayerToGame(id, ws)
+module.exports = ws => {
+  gameState.connect(ws)
 }
