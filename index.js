@@ -32,6 +32,9 @@ if (dev) {
   winston.warn = data => {
     console.warn(data)
   }
+  winston.error = data => {
+    console.error(data)
+  }
 }
 
 const app = express()
