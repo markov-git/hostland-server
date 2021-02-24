@@ -5,12 +5,12 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Web Socket is ok</title>
+  <title>WSS</title>
 </head>
 <body>
-
+<h2>Все в консоле</h2>
 <script>
-  let socket = new WebSocket(`ws://${location.host}`)
+  let socket = new WebSocket(`wss://${location.host}`)
   socket.onopen = e => {
     console.log('connection with NodeJS is open')
     console.log(e)

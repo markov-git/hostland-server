@@ -1,17 +1,15 @@
-# Сборка на http
+# Сборка на https (wss)
 
-Работает только на HTTP
+На стороне клиента на HTTPS все отлично отрабатывает, но выдает данную ошибку, т.к. express не может корректно обработать запрос.
 
-Если запустить на домене с HTTPS, выдаст логичную ошибку:
-
-![img.png](img.png)
+![img_1.png](img_1.png)
 
 ## Project setup
 ```
 npm i
 ```
 
-### Compiles and hot-reloads for development
+### Compiles for development
 ```
 npm run serve
 ```
