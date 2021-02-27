@@ -52,58 +52,106 @@
   const btn = document.querySelector('#link')
   const msgBox = document.querySelector('#msg')
 
-  let socket = new WebSocket(`ws://${location.host}`)
-  socket.onopen = () => {
-    btn.disabled = false
+  eventSource = new EventSource('/sse/init')
+  btn.disabled = false
+
+  eventSource.onopen = () => {
     infoBTN.disabled = false
     connectBTN.disabled = false
   }
-  socket.addEventListener('message', event => {
-    let payload = JSON.parse(event.data)
-    if (payload.type === 'data' || payload.type === 'info' || payload.type === 'error') {
-      payload = payload.data
-      msgBox.innerHTML = payload
-    } else if(payload.type === 'rooms') {
-      let res = ''
-      payload.data.forEach(obj => {
-        const key = Object.keys(obj)[0]
-        res += key + ` - "${obj[key]}"\n`
-      })
-      msgBox.innerHTML = res
+
+  eventSource.onerror = e => {
+    console.log('Событие: error')
+    if (eventSource.readyState === EventSource.CONNECTING) {
+      console.log(`Переподключение (readyState=${eventSource.readyState})...`)
+    } else {
+      console.log('Произошла ошибка.')
+      console.warn(e)
     }
+  }
+
+  eventSource.onmessage = e => {
+    console.log('Message: ' + e.data)
+  }
+
+  eventSource.addEventListener('rooms', e => {
+    console.log('rooms: ' + e.data)
   })
+
+  eventSource.addEventListener('json', e => {
+    console.log('state: ' + e.data)
+  })
+
+  let key
+  let myRoomID
+  eventSource.addEventListener('key', e => key = e.data)
+  eventSource.addEventListener('roomID', e => myRoomID = e.data)
+
+  // socket.addEventListener('message', event => {
+  //   let payload = JSON.parse(event.data)
+  //   if (payload.type === 'data' || payload.type === 'info' || payload.type === 'error') {
+  //     payload = payload.data
+  //     msgBox.innerHTML = payload
+  //   } else if (payload.type === 'rooms') {
+  //     let res = ''
+  //     payload.data.forEach(obj => {
+  //       const key = Object.keys(obj)[0]
+  //       res += key + ` - "${obj[key]}"\n`
+  //     })
+  //     msgBox.innerHTML = res
+  //   }
+  // })
 
   btn.addEventListener('click', () => {
     btn.disabled = true
-    socket.send(JSON.stringify({action: 'newGame', meta: {name: 'zver', pass: '1234'}}))
+    fetch('/sse/newRoom', {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({name: 'zver', pass: '1234', key})
+    })
   })
 
   const sendBTN = document.querySelector('#send')
   const sendData = document.querySelector('#sendData')
 
   sendBTN.addEventListener('click', () => {
-    socket.send(JSON.stringify({action: 'msg', message: sendData.value}))
+    fetch(`/sse/newState`, {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({data: sendData.value, id: myRoomID, pass: '1234', key})
+    })
     sendData.value = ''
   })
-
-  const closeBTN = document.querySelector('#close')
-  closeBTN.addEventListener('click', () => {
-    socket.close()
-    msgBox.innerHTML = 'connection closed'
-  })
-
+  //
+  // const closeBTN = document.querySelector('#close')
+  // closeBTN.addEventListener('click', () => {
+  //   socket.close()
+  //   msgBox.innerHTML = 'connection closed'
+  // })
+  //
   const infoBTN = document.querySelector('#info')
 
   infoBTN.addEventListener('click', () => {
-    socket.send(JSON.stringify({action: 'info'}))
+    fetch(`/sse/info/${key}`)
   })
 
   const connectBTN = document.querySelector('#connect')
   const roomId = document.querySelector('#roomID')
 
   connectBTN.addEventListener('click', () => {
-    socket.send(JSON.stringify({action: 'connect', meta: {pass: '1234', id: roomId.value.trim()}}))
+    myRoomID = roomId.value.trim()
     roomId.value = ''
+    fetch(`/sse/connect`, {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({id: myRoomID, pass: '1234', key})
+    })
   })
 </script>
 </body>

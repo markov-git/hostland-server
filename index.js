@@ -18,7 +18,7 @@ const ticRoutes = require('./routes/tictac')
 const excelRoutes = require('./routes/excel')
 const authRoutes = require('./routes/auth')
 const errorHandler = require('./middleware/error')
-const wsRoutes = require('./routes/ws.main')
+const sseRoutes = require('./routes/sse.maze')
 const keys = require('./keys/keys')
 
 const PORT = process.env.PORT || 3000
@@ -79,16 +79,19 @@ app.use(minifyHTML({
     minifyJS: true
   }
 }))
-app.use(compression())
+app.use(compression({
+  filter(req) {
+    return req.headers.accept !== 'text/event-stream'
+  }
+}))
 
 app.use('/', homeRoutes)
 app.use('/auth', authRoutes)
 app.use('/telegram', telegramRoutes)
 app.use('/tictac', ticRoutes)
 app.use('/excel', excelRoutes)
-app.ws('/', wsRoutes)
+app.use('/sse', sseRoutes)
 app.use(errorHandler)
-
 
 async function start() {
   try {
