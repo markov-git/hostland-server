@@ -51,10 +51,10 @@ class GameState {
     if (this.games[id].pass === pass && Object.keys(this.games[id].sses).length === mod) {
       return true
     } else if (Object.keys(this.games[id].sses).length === 1) {
-      this.connected[key].write(toSSE('error', 'Wrong password'))
+      this.connected[key].write(toSSE('error', 'The number of players in the game is exceeded'))
       return false
     } else {
-      this.connected[key].write(toSSE('error', 'The number of players in the game is exceeded'))
+      this.connected[key].write(toSSE('error', 'Wrong password'))
       return false
     }
   }
