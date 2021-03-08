@@ -16,12 +16,13 @@ class GameState {
     return `${Object.keys(this.connected).length}${liter}${new Date().getMilliseconds().toString().padStart(3, '0')}`
   }
 
-  createNewRoom(res, {name = 'game', pass = '', key}) {
+  createNewRoom(res, {name = 'game', pass = '', nick = '', key}) {
     const id = this._createNewId('R')
     const sse = this.connected[key]
     this._addPlayerToGame(sse, id, key)
     this.games[id].name = name
     this.games[id].pass = pass
+    this.games[id].nick = nick
     sse.write(toSSE('roomID', id))
     sse.write(toSSE('message', 'Waiting for second player'))
   }
@@ -74,7 +75,12 @@ class GameState {
   get _freeRooms() {
     return Object.keys(this.games)
       .filter(key => Object.keys(this.games[key].sses).length < MAX_PLAYERS)
-      .map(key => ({[key]: this.games[key].name}))
+      .map(key => ({
+        uid: key,
+        name: this.games[key].name,
+        nick: this.games[key].nick,
+        closed: !!this.games[key].pass
+      }))
   }
 
   connect(sse) {
@@ -107,6 +113,12 @@ class GameState {
   //   s1.send(toSSE('info', 'connection opened'))
   //   s2.send(toSSE('info', 'connection opened'))
   // }
+
+  closeConnection({id, key}) {
+    if (Object.keys(this.games[id].sses).includes(key)) {
+      this._removeGame(id)
+    }
+  }
 
   _removeGame(id) {
     delete this.games[id]

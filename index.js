@@ -10,7 +10,7 @@ const session = require('express-session')
 const MongoStore = require('connect-mongodb-session')(session)
 const flash = require('connect-flash')
 const mongoose = require('mongoose')
-const enableWs = require('express-ws')
+const cors = require('cors')
 
 const homeRoutes = require('./routes/home')
 const telegramRoutes = require('./routes/telegram')
@@ -38,7 +38,6 @@ if (dev) {
 }
 
 const app = express()
-enableWs(app)
 app.use(morgan('combined', {stream: winston.stream}))
 const hbs = exphbs.create({
   defaultLayout: 'main',
@@ -85,12 +84,19 @@ app.use(compression({
   }
 }))
 
+const corsOptions = {}
+if (process.env.NODE_ENV === 'development') {
+  corsOptions.origin = '*'
+  corsOptions.methods = ['GET', 'POST']
+  corsOptions.optionsSuccessStatus = 200
+}
+
 app.use('/', homeRoutes)
 app.use('/auth', authRoutes)
 app.use('/telegram', telegramRoutes)
 app.use('/tictac', ticRoutes)
 app.use('/excel', excelRoutes)
-app.use('/sse', sseRoutes)
+app.use('/sse', cors(corsOptions), sseRoutes)
 app.use(errorHandler)
 
 async function start() {
@@ -106,6 +112,7 @@ async function start() {
         message: `Server is running on port ${PORT}`
       })
       console.log(`http://localhost:${PORT}`)
+      console.log('mode: ', process.env.NODE_ENV)
     })
   } catch (e) {
     winston.error(e)
