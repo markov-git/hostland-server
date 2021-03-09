@@ -1,10 +1,12 @@
 const MAX_PLAYERS = 2
+const CLEAR_DELAY = 5000
 
 class GameState {
   constructor() {
     this.games = {}
-    this.connected = {}
-    return this
+    this.connected = new Map()
+
+    setInterval(this._clearClients.bind(this), CLEAR_DELAY)
   }
 
   _createGame(id) {
@@ -13,18 +15,18 @@ class GameState {
   }
 
   _createNewId(liter) {
-    return `${Object.keys(this.connected).length}${liter}${new Date().getMilliseconds().toString().padStart(3, '0')}`
+    return `${this.connected.size}${liter}${new Date().getMilliseconds().toString().padStart(3, '0')}`
   }
 
   createNewRoom(res, {name = 'game', pass = '', nick = '', key}) {
     const id = this._createNewId('R')
-    const sse = this.connected[key]
+    const sse = this.connected.get(key).sse
     this._addPlayerToGame(sse, id, key)
     this.games[id].name = name
     this.games[id].pass = pass
     this.games[id].nick = nick
     sse.write(toSSE('roomID', id))
-    sse.write(toSSE('message', 'Waiting for second player'))
+    sse.write(toSSE('message', 'Ждем второго игрока'))
   }
 
   _addPlayerToGame(sse, id, key) {
@@ -43,19 +45,21 @@ class GameState {
 
   addSecondPlayerToGame({id, pass, key}) {
     if (this._hasAccess(key, id, pass)) {
-      this.connected[key].write(toSSE('message', 'connected'))
-      this._addPlayerToGame(this.connected[key], id, key)
+      const newPlayerSse = this.connected.get(key).sse
+      newPlayerSse.write(toSSE('message', 'connected'))
+      this._addPlayerToGame(newPlayerSse, id, key)
     }
   }
 
   _hasAccess(key, id, pass, mod = 1) {
+    const playerSse = this.connected.get(key).sse
     if (this.games[id].pass === pass && Object.keys(this.games[id].sses).length === mod) {
       return true
     } else if (Object.keys(this.games[id].sses).length === 1) {
-      this.connected[key].write(toSSE('error', 'The number of players in the game is exceeded'))
+      playerSse.write(toSSE('error', 'The number of players in the game is exceeded'))
       return false
     } else {
-      this.connected[key].write(toSSE('error', 'Wrong password'))
+      playerSse.write(toSSE('error', 'Wrong password'))
       return false
     }
   }
@@ -69,10 +73,11 @@ class GameState {
   }
 
   sendFreeRoomsSSE(key) {
-    this.connected[key].write(toSSE('rooms', this._freeRooms))
+    this.connected.get(key).sse.write(toSSE('rooms', this._freeRooms))
   }
 
   get _freeRooms() {
+    console.log(this.connected.keys())
     return Object.keys(this.games)
       .filter(key => Object.keys(this.games[key].sses).length < MAX_PLAYERS)
       .map(key => ({
@@ -86,7 +91,7 @@ class GameState {
   connect(sse) {
     const id = this._createNewId('G')
     sse.write(toSSE('key', id))
-    this.connected[id] = sse
+    this.connected.set(id, {sse})
   }
 
 
@@ -120,7 +125,18 @@ class GameState {
     }
   }
 
+  _clearClients() {
+    if (this.connected.size) {
+      this.connected.forEach(({sse}, id) => {
+        if (!sse.write(toSSE('ping', ''))) {
+          this.connected.delete(id)
+        }
+      })
+    }
+  }
+
   _removeGame(id) {
+    this.connected.delete(id)
     delete this.games[id]
   }
 }
