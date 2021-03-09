@@ -19,14 +19,25 @@ class GameState {
   }
 
   createNewRoom(res, {name = 'game', pass = '', nick = '', key}) {
-    const id = this._createNewId('R')
     const sse = this.connected.get(key).sse
+
+    if (Object.values(this.games).some(game => !!game.sses[key])) {
+      sse.write(toSSE('error', 'Вы уже создали комнату'))
+      return
+    }
+
+    const id = this._createNewId('R')
     this._addPlayerToGame(sse, id, key)
     this.games[id].name = name
     this.games[id].pass = pass
     this.games[id].nick = nick
     sse.write(toSSE('roomID', id))
     sse.write(toSSE('message', 'Ждем второго игрока'))
+    this.updateRoomsToAllClients()
+  }
+
+  updateRoomsToAllClients() {
+    this.connected.forEach(({sse}) => sse.write(toSSE('rooms', this._freeRooms)))
   }
 
   _addPlayerToGame(sse, id, key) {
@@ -46,7 +57,7 @@ class GameState {
   addSecondPlayerToGame({id, pass, key}) {
     if (this._hasAccess(key, id, pass)) {
       const newPlayerSse = this.connected.get(key).sse
-      newPlayerSse.write(toSSE('message', 'connected'))
+      newPlayerSse.write(toSSE('message', 'Игра началась!'))
       this._addPlayerToGame(newPlayerSse, id, key)
     }
   }
@@ -54,12 +65,13 @@ class GameState {
   _hasAccess(key, id, pass, mod = 1) {
     const playerSse = this.connected.get(key).sse
     if (this.games[id].pass === pass && Object.keys(this.games[id].sses).length === mod) {
+      playerSse.write(toSSE('connected', 'ok'))
       return true
     } else if (Object.keys(this.games[id].sses).length === 1) {
-      playerSse.write(toSSE('error', 'The number of players in the game is exceeded'))
+      playerSse.write(toSSE('error', 'Неправильный пароль'))
       return false
     } else {
-      playerSse.write(toSSE('error', 'Wrong password'))
+      playerSse.write(toSSE('error', 'Превышено число игроков в комнате'))
       return false
     }
   }
@@ -120,7 +132,8 @@ class GameState {
   // }
 
   closeConnection({id, key}) {
-    if (Object.keys(this.games[id].sses).includes(key)) {
+    const sses = this.games[id]?.sses || {}
+    if (Object.keys(sses).includes(key)) {
       this._removeGame(id)
     }
   }
@@ -128,8 +141,9 @@ class GameState {
   _clearClients() {
     if (this.connected.size) {
       this.connected.forEach(({sse}, id) => {
-        if (!sse.write(toSSE('ping', ''))) {
+        if (!sse.write(toSSE('ping'))) {
           this.connected.delete(id)
+          this.updateRoomsToAllClients()
         }
       })
     }
