@@ -18,7 +18,7 @@ class GameState {
     return `${this.connected.size}${liter}${new Date().getMilliseconds().toString().padStart(3, '0')}`
   }
 
-  createNewRoom(res, {name = 'game', pass = '', nick = '', key}) {
+  createNewRoom(res, {name = 'game', pass, nick = '', key}) {
     const sse = this.connected.get(key).sse
 
     if (Object.values(this.games).some(game => !!game.sses[key])) {
@@ -29,7 +29,7 @@ class GameState {
     const id = this._createNewId('R')
     this._addPlayerToGame(sse, id, key)
     this.games[id].name = name
-    this.games[id].pass = pass
+    this.games[id].pass = pass || undefined
     this.games[id].nick = nick
     sse.write(toSSE('roomID', id))
     sse.write(toSSE('message', 'Ждем второго игрока'))
@@ -42,23 +42,21 @@ class GameState {
 
   _addPlayerToGame(sse, id, key) {
     const game = this.games[id] || this._createGame(id)
-
     if (Object.keys(game.sses).length + 1 > MAX_PLAYERS) {
       sse.write(toSSE('error', 'The number of players in the game is exceeded'))
-      throw new Error('The number of players in the game is exceeded')
+      return
     }
-
-    this.games[id].sses[key] = sse
-    // if (game.sses.length === MAX_PLAYERS) {
-    //   this._initGame(id)
-    // }
+    game.sses[key] = sse
+    if (Object.keys(game.sses).length === MAX_PLAYERS) {
+      this._initGame(id)
+    }
   }
 
-  addSecondPlayerToGame({id, pass, key}) {
+  addSecondPlayerToGame({key, id, pass}) {
     if (this._hasAccess(key, id, pass)) {
       const newPlayerSse = this.connected.get(key).sse
-      newPlayerSse.write(toSSE('message', 'Игра началась!'))
       this._addPlayerToGame(newPlayerSse, id, key)
+      // newPlayerSse.write(toSSE('message', 'Игра началась!'))
     }
   }
 
@@ -76,13 +74,6 @@ class GameState {
     }
   }
 
-  sendNewState({data, id, key, pass}) {
-    console.log('кто то шлет жсон')
-    if (this._hasAccess(key, id, pass, 2)) {
-      const oppositeKey = Object.keys(this.games[id].sses).find(k => k !== key)
-      this.games[id].sses[oppositeKey].write(toSSE('json', data))
-    }
-  }
 
   sendFreeRoomsSSE(key) {
     this.connected.get(key).sse.write(toSSE('rooms', this._freeRooms))
@@ -106,30 +97,20 @@ class GameState {
     this.connected.set(id, {sse})
   }
 
+  _initGame(id) {
+    const [s1, s2] = Object.values(this.games[id].sses)
 
-  // _initGame(id) {
-  //   const [s1, s2] = this.games[id].sses
-  //
-  //   s1.onmessage = null
-  //   s2.onmessage = null
-  //
-  //   s1.on('close', () => {
-  //     s2.send(toSSE('error', 'connection closed'))
-  //     this._removeGame(id)
-  //   })
-  //
-  //   s2.on('close', () => {
-  //     s1.send(toSSE('error', 'connection closed'))
-  //     this._removeGame(id)
-  //   })
-  //
-  //   s1.on('message', msg => s2.send(toSSE('data', JSON.parse(msg).message)))
-  //
-  //   s2.on('message', msg => s1.send(toSSE('data', JSON.parse(msg).message)))
-  //
-  //   s1.send(toSSE('info', 'connection opened'))
-  //   s2.send(toSSE('info', 'connection opened'))
-  // }
+    s1.write(toSSE('start', 'Игра началась!'))
+    s2.write(toSSE('start', 'Игра началась!'))
+  }
+
+  sendNewState({data, id, key, pass}) {
+    // smth go wrong with access !!
+    // if (this._hasAccess(key, id, pass, 2) ) {
+    const oppositeKey = Object.keys(this.games[id].sses).find(k => k !== key)
+    this.games[id].sses[oppositeKey].write(toSSE('json', data))
+    // }
+  }
 
   closeConnection({id, key}) {
     const sses = this.games[id]?.sses || {}
