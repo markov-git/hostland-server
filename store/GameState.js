@@ -82,13 +82,13 @@ class GameState {
 
   get _freeRooms() {
     return Object.keys(this.games)
-      .filter(key => Object.keys(this.games[key].sses).length < MAX_PLAYERS)
-      .map(key => ({
-        uid: key,
-        name: this.games[key].name,
-        nick: this.games[key].nick,
-        closed: !!this.games[key].pass,
-        size: this.games[key].size
+      .filter(id => Object.keys(this.games[id].sses).length < MAX_PLAYERS)
+      .map(id => ({
+        uid: id,
+        name: this.games[id].name,
+        nick: this.games[id].nick,
+        closed: !!this.games[id].pass,
+        size: this.games[id].size
       }))
   }
 
@@ -101,8 +101,8 @@ class GameState {
   _initGame(id) {
     const [s1, s2] = Object.values(this.games[id].sses)
 
-    s1.write(toSSE('start', 'Игра началась!'))
-    s2.write(toSSE('start', 'Игра началась!'))
+    s1.write(toSSE('start', this.games[id].size))
+    s2.write(toSSE('start', this.games[id].size))
   }
 
   sendNewState({data, id, key, pass}) {
