@@ -18,7 +18,7 @@ class GameState {
     return `${this.connected.size}${liter}${new Date().getMilliseconds().toString().padStart(3, '0')}`
   }
 
-  createNewRoom(res, {name = 'game', pass, nick = '', key}) {
+  createNewRoom(res, {name = 'game', pass, nick = '', key, size}) {
     const sse = this.connected.get(key).sse
 
     if (Object.values(this.games).some(game => !!game.sses[key])) {
@@ -31,6 +31,7 @@ class GameState {
     this.games[id].name = name
     this.games[id].pass = pass || undefined
     this.games[id].nick = nick
+    this.games[id].size = size
     sse.write(toSSE('roomID', id))
     sse.write(toSSE('message', 'Ждем второго игрока'))
     this.updateRoomsToAllClients()
@@ -80,14 +81,14 @@ class GameState {
   }
 
   get _freeRooms() {
-    console.log(this.connected.keys())
     return Object.keys(this.games)
       .filter(key => Object.keys(this.games[key].sses).length < MAX_PLAYERS)
       .map(key => ({
         uid: key,
         name: this.games[key].name,
         nick: this.games[key].nick,
-        closed: !!this.games[key].pass
+        closed: !!this.games[key].pass,
+        size: this.games[key].size
       }))
   }
 
@@ -113,7 +114,7 @@ class GameState {
   }
 
   closeConnection({id, key}) {
-    const sses = this.games[id]?.sses || {}
+    const sses = this.games[id].sses || {}
     if (Object.keys(sses).includes(key)) {
       this._removeGame(id)
     }
