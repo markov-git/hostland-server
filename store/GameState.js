@@ -32,7 +32,6 @@ class GameState {
     this.games[id].pass = pass || undefined
     this.games[id].nick = nick
     this.games[id].size = size
-    sse.write(toSSE('roomID', id))
     sse.write(toSSE('message', 'Ждем второго игрока'))
     this.updateRoomsToAllClients()
   }
