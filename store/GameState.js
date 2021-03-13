@@ -48,6 +48,7 @@ class GameState {
       return
     }
     game.sses[key] = sse
+    sse.write(toSSE('roomID', id))
     if (Object.keys(game.sses).length === MAX_PLAYERS) {
       this._initGame(id)
     }
