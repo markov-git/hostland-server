@@ -113,6 +113,11 @@ class GameState {
     // }
   }
 
+  sendNewMessage({data, id, key}) {
+    const oppositeKey = Object.keys(this.games[id].sses).find(k => k !== key)
+    this.games[id].sses[oppositeKey].write(toSSE('finished', data))
+  }
+
   closeConnection({id, key}) {
     const sses = this.games[id].sses || {}
     if (Object.keys(sses).includes(key)) {
@@ -122,8 +127,9 @@ class GameState {
 
   _clearClients() {
     if (this.connected.size) {
-      this.connected.forEach(({sse}, id) => {
+      this.connected.forEach(({sse}, id, map) => {
         if (!sse.write(toSSE('ping'))) {
+          map.forEach(v => v.sse.write(toSSE('close')))
           this.connected.delete(id)
           this.updateRoomsToAllClients()
         }

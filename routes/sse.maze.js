@@ -37,4 +37,9 @@ router.post('/remove', ((req, res) => {
   res.end()
 }))
 
+router.post('/message', ((req, res) => {
+  gameState.sendNewMessage(req.body)
+  res.end()
+}))
+
 module.exports = router
