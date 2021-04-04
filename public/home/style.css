@@ -11,10 +11,6 @@
     transition: right .8s;
 }
 
-.cross {
-    fill: white;
-}
-
 .hide {
     display: none;
 }
@@ -195,7 +191,7 @@ p {
     list-style: none;
 }
 
-.sci li svg {
+.sci li img {
     height: 45px;
 }
 
@@ -248,6 +244,7 @@ p {
 .about .content {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-top: 40px;
 }
 
