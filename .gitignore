@@ -5,3 +5,4 @@ templates
 routes/fetch.js
 routes/fetch.md
 logs
+/package-lock.json
