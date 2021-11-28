@@ -23,7 +23,7 @@ jobs:
           --include-from .deploylist \
           --exclude public \
           --exclude README.md \
-          . ${{ $SSH_USER }}@${{ $SSH_HOST }}:$DEPLOY_PATH
+          . $SSH_USER@$$SSH_HOST:$DEPLOY_PATH
         env:
           DEPLOY_PATH: ~/${{ secrets.SSH_HOST }}/nodejs_app/www/
           SSH_USER: ${{ secrets.SSH_USER }}
