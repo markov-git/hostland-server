@@ -34,7 +34,7 @@ const dictionary = {
     ru: 'Марков Артем', en: 'Artem Markov',
   },
   devF: {
-    ru: 'Я Junior Frontend Разработчик', en: 'I\'m a Junior Frontend Web Developer.',
+    ru: 'I\'m a JavaScript Frontend Web Developer.', en: 'I\'m a JavaScript Frontend Web Developer.',
   },
   devB: {
     ru: 'Я Junior Backend NodeJS Разработчик', en: 'I\'m a Junior Backend NodeJS Web Developer.',
@@ -125,7 +125,7 @@ language.addEventListener('click', () => {
 function setLanguage(lang) {
   if (!$toTranslate) $toTranslate = document.querySelectorAll('[data-language]')
   for (const node of $toTranslate) {
-    node.innerHTML = dictionary[node.dataset.language][lang]
+    node.innerHTML = dictionary[node.dataset.language]?.[lang]
   }
 }
 
