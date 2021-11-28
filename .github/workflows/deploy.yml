@@ -7,6 +7,11 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      DEPLOY_PATH: ~/${{ secrets.SSH_HOST }}/nodejs_app/www/
+      SSH_USER: ${{ secrets.SSH_USER }}
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      PORT: 1024
     steps:
       - uses: actions/checkout@v2
       - name: Install SSH Key
@@ -16,13 +21,12 @@ jobs:
           known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
       - name: Copy files to the server
         run: |
-          rsync -a --progress --human-readable --delete -e "ssh -p 1024" \
+          rsync -a --progress --human-readable --delete -e "ssh -p $PORT" \
           --exclude-from '.gitignore' \
           --include-from .deploylist \
           --exclude public \
           --exclude README.md \
           . $SSH_USER@$SSH_HOST:$DEPLOY_PATH
-        env:
-          DEPLOY_PATH: ~/${{ secrets.SSH_HOST }}/nodejs_app/www/
-          SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_HOST: ${{ secrets.SSH_HOST }}
+      - name: Install dependencies
+        run: |
+          ssh -p $PORT $SSH_USER@$SSH_HOST "cd $DEPLOY_PATH && npm install"
