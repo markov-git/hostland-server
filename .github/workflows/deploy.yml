@@ -11,7 +11,7 @@ jobs:
       DEPLOY_PATH: ~/${{ secrets.SSH_HOST }}/nodejs_app/www/
       SSH_USER: ${{ secrets.SSH_USER }}
       SSH_HOST: ${{ secrets.SSH_HOST }}
-      PORT: 1024
+      SSH_PORT: 1024
     steps:
       - uses: actions/checkout@v2
       - name: Install SSH Key
@@ -21,7 +21,7 @@ jobs:
           known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
       - name: Copy files to the server
         run: |
-          rsync -a --progress --human-readable --delete -e "ssh -p $PORT" \
+          rsync -a --progress --human-readable --delete -e "ssh -p $SSH_PORT" \
           --exclude-from '.gitignore' \
           --include-from .deploylist \
           --exclude public \
@@ -29,4 +29,30 @@ jobs:
           . $SSH_USER@$SSH_HOST:$DEPLOY_PATH
       - name: Install dependencies
         run: |
-          ssh -p $PORT $SSH_USER@$SSH_HOST "cd $DEPLOY_PATH && npm install"
+          ssh -p $SSH_PORT $SSH_USER@$SSH_HOST "cd $DEPLOY_PATH && npm install"
+
+  restart:
+    needs: deploy
+    runs-on: ubuntu-latest
+    env:
+      RESTART_PATH: ~/${{ secrets.SSH_HOST }}/nodejs_tmp/www/
+      SSH_USER: ${{ secrets.SSH_USER }}
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_PORT: 1024
+    steps:
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+      - name: Add restart file
+        run: ssh -p $SSH_PORT $SSH_USER@$SSH_HOST "cd $DEPLOY_PATH && touch always_restart.txt"
+      - name: Touch site
+        run: |
+          status_code=$(curl -I --write-out "%{http_code}" --silent --output /dev/null "https://$SSH_HOST")
+          echo $status_code
+          sleep 3
+          status_code=$(curl -I --write-out "%{http_code}" --silent --output /dev/null "https://$SSH_HOST")
+          echo $status_code
+      - name: Delete restart file
+        run: ssh -p $SSH_PORT $SSH_USER@$SSH_HOST "cd $DEPLOY_PATH && rm always_restart.txt"
