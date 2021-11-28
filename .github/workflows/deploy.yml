@@ -14,8 +14,6 @@ jobs:
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
-      - name: Setup SSH
-        run: ssh-keyscan -H ${{ secrets.SSH_KNOWN_HOSTS }} >> ~/.ssh/known_hosts
       - name: Copy files to the server
         run: |
           rsync -a --progress --human-readable --delete \
