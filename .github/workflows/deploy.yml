@@ -16,7 +16,7 @@ jobs:
           known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
       - name: Copy files to the server
         run: |
-          rsync -a --progress --human-readable --delete -port=1024 \
+          rsync -a --progress --human-readable --delete --port=1024 \
           --exclude-from '.gitignore' \
           --include-from .deploylist \
           --exclude public \
