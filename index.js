@@ -54,6 +54,7 @@ app.set('views', 'views')
 
 app.use(express.static(path.join(__dirname, 'public')))
 app.use('/images', express.static(path.join(__dirname, 'images')))
+app.use('/home', express.static(path.join(__dirname, 'public', 'newHome')))
 app.use(express.json())
 app.use(express.text())
 // app.use(express.urlencoded({extended: true}))
