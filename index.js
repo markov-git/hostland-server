@@ -12,7 +12,6 @@ const flash = require('connect-flash')
 const mongoose = require('mongoose')
 const cors = require('cors')
 
-const homeRoutes = require('./routes/home')
 const telegramRoutes = require('./routes/telegram')
 const ticRoutes = require('./routes/tictac')
 const excelRoutes = require('./routes/excel')
@@ -93,7 +92,7 @@ if (process.env.NODE_ENV === 'development') {
   corsOptions.optionsSuccessStatus = 200
 }
 
-app.use('/', homeRoutes)
+app.use('/', express.static(path.join(__dirname, 'public', 'newHome')))
 app.use('/auth', authRoutes)
 app.use('/telegram', telegramRoutes)
 app.use('/tictac', ticRoutes)
