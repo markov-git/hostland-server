@@ -45,6 +45,8 @@ jobs:
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+      - name: SHow key
+        run: echo $secrets.SSH_PRIVATE_KEY
       - name: Add restart file
         run: ssh -p $SSH_PORT $SSH_USER@$SSH_HOST "cd $DEPLOY_PATH && touch always_restart.txt"
       - name: Touch site
